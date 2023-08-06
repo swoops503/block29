@@ -31,30 +31,18 @@ export function PlayerList() {
     fetchPlayers();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (players.length === 0) {
-    return <div>No players found.</div>;
-  }
-
-  return (
+return (
     <div>
       <h2>Player List</h2>
-      <ul>
+      <div className="player-container">
         {players.map((player) => (
-          <li key={player.id}>
-            <strong>{player.name}</strong> - {player.breed}
+          <div key={player.id} className="player-item">
+            <strong>{player.name}</strong>
             <br />
             <img src={player.imageUrl} alt={player.name} style={{ width: '200px' }} />
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
