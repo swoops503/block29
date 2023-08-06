@@ -12,3 +12,14 @@ body {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+}
+
+.details {
+  text-align: center;
+}
+
+img {
+  max-width: 600px;
+}

@@ -1,37 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import { SeeDetails } from './SeeDetails';
+import { DeletePlayer } from './DeletePlayer';
 
 export function PlayerList() {
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPlayerId, setSelectedPlayerId] = useState(null);
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
         const response = await fetch('https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/players');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
         const data = await response.json();
-
-        // Check if players array exists in the data object
-        if (data && data.data && data.data.players && Array.isArray(data.data.players)) {
-          setPlayers(data.data.players);
-        } else {
-          setError('Invalid data format: players array not found in data');
-        }
-
-        setLoading(false);
+        setPlayers(data.data.players);
       } catch (error) {
         setError('Error fetching players: ' + error.message);
-        setLoading(false);
       }
     };
 
     fetchPlayers();
   }, []);
 
-return (
+  const handleSeeDetails = (playerId) => {
+    setSelectedPlayerId(playerId);
+  };
+
+  const handleDeletePlayer = async (playerId) => {
+    try {
+      const response = await fetch(`https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/players/${playerId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete player.');
+      }
+
+      // Update the player list by removing the deleted player
+      setPlayers((prevPlayers) => prevPlayers.filter((player) => player.id !== playerId));
+
+      alert('Player deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting player:', error);
+      alert('Failed to delete player. Please try again.');
+    }
+  };
+
+  return (
     <div>
       <h2>Player List</h2>
       <div className="player-container">
@@ -40,9 +54,13 @@ return (
             <strong>{player.name}</strong>
             <br />
             <img src={player.imageUrl} alt={player.name} style={{ width: '200px' }} />
+            <br />
+            <button onClick={() => handleSeeDetails(player.id)}>See Details</button>
+            <DeletePlayer playerId={player.id} onDelete={handleDeletePlayer} />
           </div>
         ))}
       </div>
+      {selectedPlayerId && <SeeDetails playerId={selectedPlayerId} />}
     </div>
   );
 }

@@ -1,17 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { PlayerList } from './components/PlayerList'
+import React from 'react';
+import { PlayerList } from './components/PlayerList'; 
+import { SeeDetails } from './components/SeeDetails';
+import { PlayerForm } from './components/PlayerForm'; 
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export function App() {
   return (
-    <>
+    <div>
       <PlayerList />
-    </>
-  )
+      <SeeDetails />
+      <PlayerForm /> 
+    </div>
+  );
 }
 
-export default App
+export default App;
