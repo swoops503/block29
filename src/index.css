@@ -1,11 +1,18 @@
 body {
-  background-color: rgb(58, 57, 57);
+  background-color: #fdbb2d;
 }
 
+.header {
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  border: 1px solid black;
+}
 .player-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
-  grid-gap: 20px; /* Adjust the gap between items as needed */
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  grid-template-columns: repeat(3, 1fr); 
+  grid-gap: 20px; 
+  border: 1px solid black;
+
 }
 
 .player-item {

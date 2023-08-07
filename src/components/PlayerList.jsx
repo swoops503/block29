@@ -6,6 +6,7 @@ export function PlayerList() {
   const [players, setPlayers] = useState([]);
   const [error, setError] = useState(null);
   const [selectedPlayerId, setSelectedPlayerId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -45,11 +46,28 @@ export function PlayerList() {
     }
   };
 
+  // Filter players based on search term
+  const filteredPlayers = players.filter((player) =>
+    player.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
+      <div className="header">
       <h2>Player List</h2>
+      <br />
+      <input
+        type="text"
+        placeholder="Search by player name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      </div>
+      <br />
+      <br />
+      <br />
       <div className="player-container">
-        {players.map((player) => (
+        {filteredPlayers.map((player) => (
           <div key={player.id} className="player-item">
             <strong>{player.name}</strong>
             <br />
